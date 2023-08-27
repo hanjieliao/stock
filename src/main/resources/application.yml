@@ -1,0 +1,32 @@
+server:
+  port: 8882
+logging:
+  config: classpath:log4j2.xml
+
+spring:
+  application:
+    # 应用名称
+    name: stock
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  main:
+    #允许循环依赖
+    allow-circular-references: true
+  jackson:
+    time-zone: GMT+8
+    default-property-inclusion: NON_NULL
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      location: ${java.io.tmpdir}
+      max-file-size: 2048MB
+      max-request-size: 2048MB
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/stock?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: ${DB_USER:root}
+    password: ${DB_PASSWD:123456}
+    driver-class-name: ${DB_CLASS:com.mysql.cj.jdbc.Driver}
+    hikari:
+      # 连接池的最大连接数，请配置>1的值
+      maximum-pool-size: ${MAXIMUM_POOL_SIZE:10}
