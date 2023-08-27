@@ -79,17 +79,29 @@ public class RecommendMatch implements IEntity<Long> {
     @Column
     private double maxLossRate;
 
-    /**
-     * 最大盈利
-     */
-    @Column
-    private int maxProfit;
-    /**
-     * 最大盈利率
-     */
-    @Column
-    private double maxProfitRate;
 
+    /**
+     * 涨最大盈利
+     */
+    @Column
+    private int zhangMaxProfit;
+    /**
+     * 涨最大盈利率
+     */
+    @Column
+    private double zhangMaxProfitRate;
+
+
+    /**
+     * 跌最大盈利
+     */
+    @Column
+    private int dieMaxProfit;
+    /**
+     * 跌最大盈利率
+     */
+    @Column
+    private double dieMaxProfitRate;
     /**
      * 实际盈亏
      */
@@ -115,8 +127,10 @@ public class RecommendMatch implements IEntity<Long> {
         recommendMatch.setRealCost(match.getRealCost());
         recommendMatch.setMaxLoss(match.getMaxLoss());
         recommendMatch.setMaxLossRate(match.getMaxLossRate());
-        recommendMatch.setMaxProfit(match.getMaxProfit());
-        recommendMatch.setMaxProfitRate(match.getMaxProfitRate());
+        recommendMatch.setZhangMaxProfit(match.getZhangMaxProfit());
+        recommendMatch.setZhangMaxProfitRate(match.getZhangMaxProfitRate());
+        recommendMatch.setDieMaxProfit(match.getDieMaxProfit());
+        recommendMatch.setDieMaxProfitRate(match.getDieMaxProfitRate());
         recommendMatch.setDateStr(dateStr);
         return recommendMatch;
     }
@@ -234,19 +248,35 @@ public class RecommendMatch implements IEntity<Long> {
         this.maxLossRate = maxLossRate;
     }
 
-    public int getMaxProfit() {
-        return maxProfit;
+    public int getZhangMaxProfit() {
+        return zhangMaxProfit;
     }
 
-    public void setMaxProfit(int maxProfit) {
-        this.maxProfit = maxProfit;
+    public void setZhangMaxProfit(int zhangMaxProfit) {
+        this.zhangMaxProfit = zhangMaxProfit;
     }
 
-    public double getMaxProfitRate() {
-        return maxProfitRate;
+    public double getZhangMaxProfitRate() {
+        return zhangMaxProfitRate;
     }
 
-    public void setMaxProfitRate(double maxProfitRate) {
-        this.maxProfitRate = maxProfitRate;
+    public void setZhangMaxProfitRate(double zhangMaxProfitRate) {
+        this.zhangMaxProfitRate = zhangMaxProfitRate;
+    }
+
+    public int getDieMaxProfit() {
+        return dieMaxProfit;
+    }
+
+    public void setDieMaxProfit(int dieMaxProfit) {
+        this.dieMaxProfit = dieMaxProfit;
+    }
+
+    public double getDieMaxProfitRate() {
+        return dieMaxProfitRate;
+    }
+
+    public void setDieMaxProfitRate(double dieMaxProfitRate) {
+        this.dieMaxProfitRate = dieMaxProfitRate;
     }
 }

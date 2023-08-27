@@ -57,8 +57,11 @@ public class Match {
         //大涨后最终剩余价值
         int dieRetainReal = dieGouRealValue * match.gouCount + dieGuRealValue * match.guCount - (match.guCount*3);
 
-        match.maxProfit = Math.max(zhangRetainReal, dieRetainReal);
-        match.maxProfitRate = match.maxProfit*1.0/ match.realCost;
+        match.zhangMaxProfit = zhangRetainReal;
+        match.zhangMaxProfitRate = zhangRetainReal*1.0/match.realCost;
+
+        match.dieMaxProfit = dieRetainReal;
+        match.dieMaxProfitRate = dieRetainReal*1.0/match.realCost;
         return match;
     }
 
@@ -98,14 +101,25 @@ public class Match {
      */
     private double maxLossRate;
 
+
     /**
-     * 最大盈利
+     * 涨最大盈利
      */
-    private int maxProfit;
+    private int zhangMaxProfit;
     /**
-     * 最大盈利率
+     * 涨最大盈利率
      */
-    private double maxProfitRate;
+    private double zhangMaxProfitRate;
+
+
+    /**
+     * 跌最大盈利
+     */
+    private int dieMaxProfit;
+    /**
+     * 跌最大盈利率
+     */
+    private double dieMaxProfitRate;
 
     /**
      * 购合同
@@ -189,19 +203,35 @@ public class Match {
         this.maxLossRate = maxLossRate;
     }
 
-    public int getMaxProfit() {
-        return maxProfit;
+    public int getZhangMaxProfit() {
+        return zhangMaxProfit;
     }
 
-    public void setMaxProfit(int maxProfit) {
-        this.maxProfit = maxProfit;
+    public void setZhangMaxProfit(int zhangMaxProfit) {
+        this.zhangMaxProfit = zhangMaxProfit;
     }
 
-    public double getMaxProfitRate() {
-        return maxProfitRate;
+    public double getZhangMaxProfitRate() {
+        return zhangMaxProfitRate;
     }
 
-    public void setMaxProfitRate(double maxProfitRate) {
-        this.maxProfitRate = maxProfitRate;
+    public void setZhangMaxProfitRate(double zhangMaxProfitRate) {
+        this.zhangMaxProfitRate = zhangMaxProfitRate;
+    }
+
+    public int getDieMaxProfit() {
+        return dieMaxProfit;
+    }
+
+    public void setDieMaxProfit(int dieMaxProfit) {
+        this.dieMaxProfit = dieMaxProfit;
+    }
+
+    public double getDieMaxProfitRate() {
+        return dieMaxProfitRate;
+    }
+
+    public void setDieMaxProfitRate(double dieMaxProfitRate) {
+        this.dieMaxProfitRate = dieMaxProfitRate;
     }
 }
