@@ -13,8 +13,9 @@ public class RecommendMatchRepository extends AbstractEntityRepository<Recommend
     }
 
 
-    public RecommendMatch getByGouAndGu( Long etfContractId, String gou, String gu, String dateStr){
+    public RecommendMatch getByGouAndGu(Long etfContractId, String bodongRate, String gou, String gu, String dateStr){
         Cnd cnd = Cnd.where(RecommendMatch.Fields.etfContractId, "=", etfContractId);
+        cnd.and(RecommendMatch.Fields.bodongRate, "=", bodongRate);
         cnd.and(RecommendMatch.Fields.gou, "=", gou);
         cnd.and(RecommendMatch.Fields.gu, "=", gu);
         cnd.and(RecommendMatch.Fields.dateStr, "=", dateStr);

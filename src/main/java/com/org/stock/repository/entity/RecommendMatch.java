@@ -26,6 +26,18 @@ public class RecommendMatch implements IEntity<Long> {
     private Long etfContractId;
 
     /**
+     * 波动
+     */
+    @Column
+    private double bodong;
+
+    /**
+     * 波动率
+     */
+    @Column
+    private String bodongRate;
+
+    /**
      * 推荐日期(每个组合一天最多推荐一次)
      */
     @Column
@@ -118,6 +130,8 @@ public class RecommendMatch implements IEntity<Long> {
     public static RecommendMatch valueOf(Match match, String dateStr){
         RecommendMatch recommendMatch = new RecommendMatch();
         recommendMatch.setEtfContractId(match.getEtfContractId());
+        recommendMatch.setBodongRate(match.getBodongRate());
+        recommendMatch.setBodong(match.getBodong());
         recommendMatch.setGou(match.getGou().getGouName());
         recommendMatch.setGouId(match.getGou().getId());
         recommendMatch.setGu(match.getGu().getGuName());
@@ -278,5 +292,21 @@ public class RecommendMatch implements IEntity<Long> {
 
     public void setDieMaxProfitRate(double dieMaxProfitRate) {
         this.dieMaxProfitRate = dieMaxProfitRate;
+    }
+
+    public double getBodong() {
+        return bodong;
+    }
+
+    public void setBodong(double bodong) {
+        this.bodong = bodong;
+    }
+
+    public String getBodongRate() {
+        return bodongRate;
+    }
+
+    public void setBodongRate(String bodongRate) {
+        this.bodongRate = bodongRate;
     }
 }

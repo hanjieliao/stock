@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -57,24 +58,30 @@ public class AnalysisService {
         }
 
         List<Match> matches = new ArrayList<>();
-        for (ContractData gou : gouGroup) {
-            for (ContractData gu : guGroup) {
-                Match match = Match.valueOf(id, 3000, gou, gu, etf.getCurPrice().doubleValue(), bodong.doubleValue());
-                if(match.getGouCount() <=0 || match.getGuCount() <= 0){
-                    continue;
+        List<String> bodongRates = Arrays.asList("0.01", "0.015", "0.02", "0.025");
+        for (String bodongRate : bodongRates) {
+            for (ContractData gou : gouGroup) {
+                for (ContractData gu : guGroup) {
+                    Match match = Match.valueOf(id, 3000, gou, gu, etf.getCurPrice().doubleValue(), bodongRate);
+                    if(match.getGouCount() <=0 || match.getGuCount() <= 0){
+                        continue;
+                    }
+                    matches.add(match);
                 }
-                matches.add(match);
             }
         }
 
+
+
         for (Match match : matches) {
-            RecommendMatch recommendMatch = recommendMatchRepository.getByGouAndGu(id, match.getGou().getGouName(), match.getGu().getGuName(), dateStr);
+            RecommendMatch recommendMatch = recommendMatchRepository.getByGouAndGu(id,match.getBodongRate(), match.getGou().getGouName(), match.getGu().getGuName(), dateStr);
             if(recommendMatch != null){
                 continue;
             }
 
             recommendMatchRepository.insert(RecommendMatch.valueOf(match, dateStr));
         }
+
     }
 
 

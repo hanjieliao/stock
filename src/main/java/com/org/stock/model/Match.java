@@ -12,11 +12,14 @@ public class Match {
      * @param gou 购合约
      * @param gu 沽合约
      * @param etfPrice etf当前价格
-     * @param bodong 波动
+     * @param bodongRate 波动率
      * @return
      */
-    public static Match valueOf(Long etfContractId, int expectedCost, ContractData gou, ContractData gu, double etfPrice, double bodong){
+    public static Match valueOf(Long etfContractId, int expectedCost, ContractData gou, ContractData gu, double etfPrice, String bodongRate){
         Match match = new Match();
+        match.bodongRate = bodongRate;
+        match.bodong = new BigDecimal(etfPrice).multiply(new BigDecimal(bodongRate)).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+
         match.gou = gou;
         match.gu = gu;
         match.etfContractId = etfContractId;
@@ -40,19 +43,19 @@ public class Match {
         match.maxLossRate = match.maxLoss*1.0/ match.realCost;
 
         //大涨完购的内在价值
-        int zhangGouRealValue = (int)(((etfPrice + bodong) - gou.getExercisePrice().doubleValue())*10000);
+        int zhangGouRealValue = (int)(((etfPrice + match.bodong) - gou.getExercisePrice().doubleValue())*10000);
         zhangGouRealValue = Math.max(zhangGouRealValue, 0);
         //大涨完沽的内在价值
-        int zhangGuRealValue = (int)((gu.getExercisePrice().doubleValue() - (etfPrice + bodong))*10000);
+        int zhangGuRealValue = (int)((gu.getExercisePrice().doubleValue() - (etfPrice + match.bodong))*10000);
         zhangGuRealValue = Math.max(zhangGuRealValue, 0);
         //大涨后最终剩余价值
         int zhangRetainReal = zhangGouRealValue * match.gouCount + zhangGuRealValue * match.guCount - (match.gouCount*3);
 
         //大跌完购的内在价值
-        int dieGouRealValue = (int)(((etfPrice - bodong) - gou.getExercisePrice().doubleValue())*10000);
+        int dieGouRealValue = (int)(((etfPrice - match.bodong) - gou.getExercisePrice().doubleValue())*10000);
         dieGouRealValue = Math.max(dieGouRealValue, 0);
         //大跌完沽的内在价值
-        int dieGuRealValue = (int)((gu.getExercisePrice().doubleValue() - (etfPrice - bodong))*10000);
+        int dieGuRealValue = (int)((gu.getExercisePrice().doubleValue() - (etfPrice - match.bodong))*10000);
         dieGuRealValue = Math.max(dieGuRealValue, 0);
         //大涨后最终剩余价值
         int dieRetainReal = dieGouRealValue * match.gouCount + dieGuRealValue * match.guCount - (match.guCount*3);
@@ -71,6 +74,16 @@ public class Match {
      * {@link EtfContract#getId()}
      */
     private Long etfContractId;
+
+    /**
+     * 波动
+     */
+    private double bodong;
+
+    /**
+     * 波动率
+     */
+    private String bodongRate;
 
     /**
      * 期望花费
@@ -233,5 +246,21 @@ public class Match {
 
     public void setDieMaxProfitRate(double dieMaxProfitRate) {
         this.dieMaxProfitRate = dieMaxProfitRate;
+    }
+
+    public double getBodong() {
+        return bodong;
+    }
+
+    public void setBodong(double bodong) {
+        this.bodong = bodong;
+    }
+
+    public String getBodongRate() {
+        return bodongRate;
+    }
+
+    public void setBodongRate(String bodongRate) {
+        this.bodongRate = bodongRate;
     }
 }
