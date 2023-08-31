@@ -60,11 +60,11 @@ public class Match {
         //大涨后最终剩余价值
         int dieRetainReal = dieGouRealValue * match.gouCount + dieGuRealValue * match.guCount - (match.guCount*3);
 
-        match.zhangMaxProfit = zhangRetainReal;
-        match.zhangMaxProfitRate = zhangRetainReal*1.0/match.realCost;
+        match.zhangMaxProfit = zhangRetainReal - match.realCost;
+        match.zhangMaxProfitRate = match.zhangMaxProfit*1.0/match.realCost;
 
-        match.dieMaxProfit = dieRetainReal;
-        match.dieMaxProfitRate = dieRetainReal*1.0/match.realCost;
+        match.dieMaxProfit = dieRetainReal - match.realCost;
+        match.dieMaxProfitRate = match.dieMaxProfit*1.0/match.realCost;
         return match;
     }
 
