@@ -62,6 +62,10 @@ public class AnalysisService {
         for (String bodongRate : bodongRates) {
             for (ContractData gou : gouGroup) {
                 for (ContractData gu : guGroup) {
+                    if(gou.getCurGouPrice().equals("-") || gu.getCurGouPrice().equals("-") || gu.getCurGuPrice().equals("-")){
+                        continue;
+                    }
+
                     Match match = Match.valueOf(id, 3000, gou, gu, etf.getCurPrice().doubleValue(), bodongRate);
                     if(match.getGouCount() <=0 || match.getGuCount() <= 0){
                         continue;
